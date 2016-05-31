@@ -2,6 +2,7 @@ package top.cokernut.recyclerview.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
     protected List<E> mData;
     protected LayoutInflater mInflater;
     protected Context mContext;
+    private ItemTouchHelper mItemTouchHelper;
 
     protected BaseRecyclerAdapter(Context context, List<E> data) {
         this.mContext = context;
@@ -25,15 +27,39 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
         this.mInflater = LayoutInflater.from(context);
     }
 
-    public void setDatas(List<E> datas) {
-        setDatas(datas, false);
+    //拖动和滑动事件
+    public void setItemTouchHelper(RecyclerView recyclerView) {
+        mItemTouchHelper = new ItemTouchHelper(new BaseItemTouchHelperCallback<>(this));
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    public void setDatas(List<E> datas, boolean isChanged) {
+    //有作用的前提是：BaseItemTouchHelperCallback中isLongPressDragEnabled()方法中返回false，
+    //即继承BaseItemTouchHelperCallback并重写isLongPressDragEnabled()方法
+    //并且重写setItemTouchHelper()方法设置对应的BaseItemTouchHelperCallback
+    public void startDrag(RecyclerView.ViewHolder vh) {
+        mItemTouchHelper.startDrag(vh);
+    }
+
+    //有作用的前提是：BaseItemTouchHelperCallback中isItemViewSwipeEnabled()方法中返回false，
+    //即继承BaseItemTouchHelperCallback并重写isItemViewSwipeEnabled()方法，
+    //并且重写setItemTouchHelper()方法设置对应的BaseItemTouchHelperCallback
+    public void startSwipe(RecyclerView.ViewHolder vh) {
+        mItemTouchHelper.startSwipe(vh);
+    }
+
+    public void setData(List<E> datas) {
+        setData(datas, false);
+    }
+
+    public void setData(List<E> datas, boolean isChanged) {
         this.mData = datas;
         if (isChanged) {
             notifyDataSetChanged();
         }
+    }
+
+    public List<E> getData() {
+        return mData;
     }
 
     //添加数据
@@ -145,6 +171,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
         @Override
         public void onItemSelected(int actionState) {}
 
+        //可在此方法中做缓存Items数据的操作 mData
         @Override
         public void onItemClear() {}
 

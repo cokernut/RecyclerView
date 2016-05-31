@@ -98,7 +98,7 @@ public class BaseItemTouchHelperCallback<E extends BaseRecyclerAdapter> extends 
         return true;
     }
 
-    //而要在view任意位置触摸事件发生时启用滑动操作，则直接在sItemViewSwipeEnabled()中返回true就可以了。
+    //而要在view任意位置触摸事件发生时启用滑动操作，则直接在isItemViewSwipeEnabled()中返回true就可以了。
     //或者，你也主动调用ItemTouchHelper.startSwipe(RecyclerView.ViewHolder) 来开始滑动操作。
     @Override
     public boolean isItemViewSwipeEnabled() {

@@ -19,7 +19,8 @@
         <activity
             android:name=".activity.SimpleActivity"
             android:label="@string/title_activity_simple" />
-        <activity android:name=".activity.SwipeAndDragActivity"></activity>
+        <activity android:name=".activity.SwipeAndDragActivity" />
+        <activity android:name=".activity.SwipeViewActivity"></activity>
     </application>
 
 </manifest>

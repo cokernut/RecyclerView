@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CardView mSimpleCV;
     private CardView mTypeCV;
     private CardView mSwipeDragCV;
+    private CardView mSwipeViewCV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +22,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSimpleCV   = (CardView) findViewById(R.id.cv_simple);
         mTypeCV     = (CardView) findViewById(R.id.cv_type);
         mSwipeDragCV= (CardView) findViewById(R.id.cv_swipe_drag);
+        mSwipeViewCV= (CardView) findViewById(R.id.cv_swipeview);
 
         mSimpleCV   .setOnClickListener(this);
         mTypeCV     .setOnClickListener(this);
         mSwipeDragCV.setOnClickListener(this);
+        mSwipeViewCV.setOnClickListener(this);
     }
 
     @Override
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.cv_swipe_drag:
                 startActivity(new Intent(MainActivity.this, SwipeAndDragActivity.class));
+                break;
+            case R.id.cv_swipeview:
+                startActivity(new Intent(MainActivity.this, SwipeViewActivity.class));
                 break;
         }
     }
