@@ -22,7 +22,7 @@ import top.cokernut.recyclerview.R;
 import top.cokernut.recyclerview.adapter.SimpleAdapter;
 import top.cokernut.recyclerview.dialog.CustomDialog;
 import top.cokernut.recyclerview.enumeration.LayoutManagerType;
-import top.cokernut.recyclerview.listener.OnRVScrollListener;
+import top.cokernut.recyclerview.base.OnRVScrollListener;
 
 public class SimpleActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -68,7 +68,6 @@ public class SimpleActivity extends AppCompatActivity implements SwipeRefreshLay
         mRecyclerView.addOnScrollListener(new OnRVScrollListener() {
             @Override
             public void onBottom() {
-                super.onBottom();
                 if (!isLoading) {
                     if (hasMore) {
                         mLoadingTV.setVisibility(View.VISIBLE);
@@ -77,33 +76,16 @@ public class SimpleActivity extends AppCompatActivity implements SwipeRefreshLay
                 }
             }
 
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+            @Override
+            public void onTop() {
+                mGoTopIV.setVisibility(View.GONE);
+                mSRL.setEnabled(true);
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int firstVisibleItemPosition = 0;
-
-                if (mRecyclerView.getLayoutManager() instanceof LinearLayoutManager) {
-                    firstVisibleItemPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-                } else if (mRecyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {
-                    int[] firstVisibleItems = null;
-                    firstVisibleItems = ((StaggeredGridLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPositions(firstVisibleItems);
-                    if (firstVisibleItems != null && firstVisibleItems.length > 0) {
-                        firstVisibleItemPosition = firstVisibleItems[0];
-                    }
-                } else {
-                    firstVisibleItemPosition = ((GridLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-                }
-                if (firstVisibleItemPosition == 0) {
-                    mGoTopIV.setVisibility(View.GONE);
-                    mSRL.setEnabled(true);
-                } else {
-                    mGoTopIV.setVisibility(View.VISIBLE);
-                    mSRL.setEnabled(false);
-                }
+            public void onCenter() {
+                mGoTopIV.setVisibility(View.VISIBLE);
+                mSRL.setEnabled(false);
             }
         });
     }

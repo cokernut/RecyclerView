@@ -13,7 +13,7 @@ import java.util.List;
 import top.cokernut.recyclerview.R;
 import top.cokernut.recyclerview.adapter.SwipeAndDragAdapter;
 import top.cokernut.recyclerview.callback.ItemTouchHelperCallback;
-import top.cokernut.recyclerview.listener.OnRecyclerItemClickListener;
+import top.cokernut.recyclerview.base.OnRecyclerItemClickListener;
 
 public class SwipeAndDragActivity extends AppCompatActivity {
 
@@ -42,8 +42,8 @@ public class SwipeAndDragActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(RecyclerView.ViewHolder vh, int position) {
-                //如果item不是最后一个，则执行拖拽
-                if (vh.getLayoutPosition()!=mDatas.size()-1) {
+                //如果item不是最后五个，则执行拖拽
+                if (vh.getLayoutPosition()!=mDatas.size()-5) {
                     mItemTouchHelper.startDrag(vh);
                 }
             }

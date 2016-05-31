@@ -1,4 +1,4 @@
-package top.cokernut.recyclerview.listener;
+package top.cokernut.recyclerview.base;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;

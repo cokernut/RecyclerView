@@ -1,4 +1,4 @@
-package top.cokernut.recyclerview.callback;
+package top.cokernut.recyclerview.base;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.GridLayoutManager;
@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import top.cokernut.recyclerview.adapter.BaseRecyclerAdapter;
-import top.cokernut.recyclerview.impl.ItemTouchHelperViewHolderImpl;
+import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
+import top.cokernut.recyclerview.impl.ItemTouchHelperImpl;
 
 public class BaseItemTouchHelperCallback<E extends BaseRecyclerAdapter> extends ItemTouchHelper.Callback {
 
@@ -34,22 +34,23 @@ public class BaseItemTouchHelperCallback<E extends BaseRecyclerAdapter> extends 
     }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
-                          RecyclerView.ViewHolder target) {
+    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
         int fromPosition = viewHolder.getAdapterPosition();//得到拖动ViewHolder的position
         int toPosition = target.getAdapterPosition();//得到目标ViewHolder的position
-        mAdapter.moveItem(fromPosition, toPosition);
+        mAdapter.onMoved(fromPosition, toPosition);
         return true;
     }
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+        int position = viewHolder.getAdapterPosition();
+        mAdapter.onSwiped(viewHolder, direction);
+    }
 
-    //当长按选中item的时候（拖拽开始的时候）调用
     @Override
-    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-            // Fade out the view as it is swiped out of the parent's bounds
             final float alpha = ALPHA_FULL - Math.abs(dX) / (float) viewHolder.itemView.getWidth();
             viewHolder.itemView.setAlpha(alpha);
             viewHolder.itemView.setTranslationX(dX);
@@ -58,11 +59,12 @@ public class BaseItemTouchHelperCallback<E extends BaseRecyclerAdapter> extends 
         }
     }
 
+    //当长按选中item的时候（拖拽开始的时候）调用
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-            if (viewHolder instanceof ItemTouchHelperViewHolderImpl) {
-                ItemTouchHelperViewHolderImpl itemViewHolder = (ItemTouchHelperViewHolderImpl) viewHolder;
+            if (viewHolder instanceof ItemTouchHelperImpl) {
+                ItemTouchHelperImpl itemViewHolder = (ItemTouchHelperImpl) viewHolder;
                 itemViewHolder.onItemSelected(actionState);
             }
         }
@@ -74,8 +76,8 @@ public class BaseItemTouchHelperCallback<E extends BaseRecyclerAdapter> extends 
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
         viewHolder.itemView.setAlpha(ALPHA_FULL);
-        if (viewHolder instanceof ItemTouchHelperViewHolderImpl) {
-            ItemTouchHelperViewHolderImpl itemViewHolder = (ItemTouchHelperViewHolderImpl) viewHolder;
+        if (viewHolder instanceof ItemTouchHelperImpl) {
+            ItemTouchHelperImpl itemViewHolder = (ItemTouchHelperImpl) viewHolder;
             itemViewHolder.onItemClear();
         }
     }

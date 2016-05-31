@@ -1,9 +1,11 @@
-package top.cokernut.recyclerview.listener;
+package top.cokernut.recyclerview.base;
 
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
+
+import top.cokernut.recyclerview.base.BaseOnGestureListener;
 
 public abstract class OnRecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
     private GestureDetectorCompat mGestureDetector;
@@ -41,7 +43,7 @@ public abstract class OnRecyclerItemClickListener implements RecyclerView.OnItem
             return true;
         }
 
-        //长点击事件，本例不需要不处理
+        //长按事件
         @Override
         public void onLongPress(MotionEvent e) {
             View child = recyclerView.findChildViewUnder(e.getX(), e.getY());

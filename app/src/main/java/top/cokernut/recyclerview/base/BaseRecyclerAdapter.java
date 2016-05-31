@@ -1,4 +1,4 @@
-package top.cokernut.recyclerview.adapter;
+package top.cokernut.recyclerview.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
-import top.cokernut.recyclerview.impl.ItemTouchHelperViewHolderImpl;
+import top.cokernut.recyclerview.impl.ItemTouchHelperCallbackImpl;
+import top.cokernut.recyclerview.impl.ItemTouchHelperImpl;
 
-public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.BaseViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.BaseViewHolder> extends RecyclerView.Adapter<VH>
+    implements ItemTouchHelperCallbackImpl {
 
     protected List<E> mData;
     protected LayoutInflater mInflater;
@@ -85,6 +87,18 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
     }
 
     @Override
+    public void onMoved(int fromPosition, int toPosition) {
+        moveItem(fromPosition, toPosition);
+    }
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+        if (viewHolder instanceof BaseViewHolder) {
+            ((BaseViewHolder) viewHolder).swipe(direction);
+        }
+    }
+
+    @Override
     public final int getItemViewType(int position) {
         return getItemType(position);
     }
@@ -122,7 +136,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
 
     protected abstract void bindHolder(VH holder, int position);
 
-    public static abstract class BaseViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolderImpl {
+    public static abstract class BaseViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperImpl {
 
         public BaseViewHolder(View itemView) {
             super(itemView);
@@ -133,5 +147,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
 
         @Override
         public void onItemClear() {}
+
+        public void swipe(int direction) {}
     }
 }

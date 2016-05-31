@@ -1,25 +1,27 @@
-package top.cokernut.recyclerview.listener;
+package top.cokernut.recyclerview.base;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
+
+import top.cokernut.recyclerview.enumeration.LayoutManagerType;
 
 public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
-
-    public enum LAYOUT_MANAGER_TYPE {
-        LINEAR,
-        GRID,
-        STAGGERED
-    }
 
     /**
      * layoutManager的类型（枚举）
      */
-    protected LAYOUT_MANAGER_TYPE layoutManagerType;
+    protected LayoutManagerType layoutManagerType;
 
     /**
      * 最后一个的位置
+     */
+    private int[] firstPositions;
+
+    /**
+     * 第一个的位置
      */
     private int[] lastPositions;
 
@@ -28,6 +30,10 @@ public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
      */
     private int lastVisibleItemPosition;
 
+    /**
+     * 第一个可见的item的位置
+     */
+    private int firstVisibleItemPosition;
 
     /**
      * 当前滑动的状态
@@ -41,11 +47,11 @@ public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
 
         if (layoutManager instanceof LinearLayoutManager) {
-            layoutManagerType = LAYOUT_MANAGER_TYPE.LINEAR;
+            layoutManagerType = LayoutManagerType.LINEAR;
         } else if (layoutManager instanceof GridLayoutManager) {
-            layoutManagerType = LAYOUT_MANAGER_TYPE.GRID;
+            layoutManagerType = LayoutManagerType.GRID;
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            layoutManagerType = LAYOUT_MANAGER_TYPE.STAGGERED;
+            layoutManagerType = LayoutManagerType.STAGGERED;
         } else {
             throw new RuntimeException(
                     "Unsupported LayoutManager used. Valid ones are LinearLayoutManager, GridLayoutManager and StaggeredGridLayoutManager");
@@ -53,16 +59,20 @@ public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
 
         switch (layoutManagerType) {
             case LINEAR:
-                lastVisibleItemPosition = ((LinearLayoutManager) layoutManager)
-                        .findLastVisibleItemPosition();
+                firstVisibleItemPosition = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+                lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
                 break;
             case GRID:
-                lastVisibleItemPosition = ((GridLayoutManager) layoutManager)
-                        .findLastVisibleItemPosition();
+                firstVisibleItemPosition = ((GridLayoutManager) layoutManager).findFirstVisibleItemPosition();
+                lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
                 break;
             case STAGGERED:
-                StaggeredGridLayoutManager staggeredGridLayoutManager
-                        = (StaggeredGridLayoutManager) layoutManager;
+                StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
+                if (firstPositions == null) {
+                    firstPositions = new int[staggeredGridLayoutManager.getSpanCount()];
+                }
+                staggeredGridLayoutManager.findFirstVisibleItemPositions(firstPositions);
+                firstVisibleItemPosition = firstPositions[0];
                 if (lastPositions == null) {
                     lastPositions = new int[staggeredGridLayoutManager.getSpanCount()];
                 }
@@ -70,8 +80,24 @@ public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
                 lastVisibleItemPosition = findMax(lastPositions);
                 break;
         }
+        int visibleItemCount = layoutManager.getChildCount();
+        int totalItemCount = layoutManager.getItemCount();
+        if (firstVisibleItemPosition == 0) {
+            onTop();
+        } else {
+            onCenter();
+        }
+        if (visibleItemCount > 0 && lastVisibleItemPosition + 1 >= totalItemCount) {
+            onBottom();
+        }
 
     }
+
+    public abstract void onBottom();
+
+    public abstract void onTop();
+
+    public void onCenter(){}
 
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -82,12 +108,8 @@ public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
         int totalItemCount = layoutManager.getItemCount();
         if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE &&
                 (lastVisibleItemPosition) >= totalItemCount - 1)) {
-            //Log.d(TAG, "is loading more");
-            onBottom();
+           // onBottom();
         }
-    }
-
-    public void onBottom() {
     }
 
     private int findMax(int[] lastPositions) {
