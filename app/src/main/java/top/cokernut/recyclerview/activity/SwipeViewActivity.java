@@ -11,7 +11,7 @@ import java.util.List;
 
 import top.cokernut.recyclerview.R;
 import top.cokernut.recyclerview.adapter.SwipeViewAdapter;
-import top.cokernut.recyclerview.base.OnRecyclerItemClickListener;
+import top.cokernut.recyclerview.base.OnRVItemTouchListener;
 
 public class SwipeViewActivity extends AppCompatActivity {
 
@@ -32,7 +32,7 @@ public class SwipeViewActivity extends AppCompatActivity {
         }
         mAdapter = new SwipeViewAdapter(this, mDatas);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnItemTouchListener(new OnRecyclerItemClickListener(mRecyclerView) {
+        mRecyclerView.addOnItemTouchListener(new OnRVItemTouchListener(mRecyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh, int position) {
                 Toast.makeText(SwipeViewActivity.this, mAdapter.getItemModel(position), Toast.LENGTH_SHORT).show();

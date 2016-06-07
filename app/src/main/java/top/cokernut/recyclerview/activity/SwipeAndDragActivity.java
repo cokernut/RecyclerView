@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -12,8 +11,7 @@ import java.util.List;
 
 import top.cokernut.recyclerview.R;
 import top.cokernut.recyclerview.adapter.SwipeAndDragAdapter;
-import top.cokernut.recyclerview.callback.ItemTouchHelperCallback;
-import top.cokernut.recyclerview.base.OnRecyclerItemClickListener;
+import top.cokernut.recyclerview.base.OnRVItemTouchListener;
 
 public class SwipeAndDragActivity extends AppCompatActivity {
 
@@ -33,7 +31,7 @@ public class SwipeAndDragActivity extends AppCompatActivity {
         }
         mAdapter = new SwipeAndDragAdapter(this, mDatas);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnItemTouchListener(new OnRecyclerItemClickListener(mRecyclerView) {
+        mRecyclerView.addOnItemTouchListener(new OnRVItemTouchListener(mRecyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh, int position) {
                 Toast.makeText(SwipeAndDragActivity.this, mAdapter.getItemModel(position), Toast.LENGTH_SHORT).show();

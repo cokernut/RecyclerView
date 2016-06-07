@@ -7,11 +7,11 @@ import android.view.View;
 
 import top.cokernut.recyclerview.base.BaseOnGestureListener;
 
-public abstract class OnRecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
+public abstract class OnRVItemTouchListener implements RecyclerView.OnItemTouchListener {
     private GestureDetectorCompat mGestureDetector;
     private RecyclerView recyclerView;
 
-    public OnRecyclerItemClickListener(RecyclerView recyclerView) {
+    public OnRVItemTouchListener(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
         mGestureDetector = new GestureDetectorCompat(recyclerView.getContext(), new ItemTouchHelperGestureListener());
     }
