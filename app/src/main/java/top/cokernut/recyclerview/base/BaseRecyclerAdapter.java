@@ -59,7 +59,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
     }
 
     public void setData(List<E> datas) {
-        setData(datas, false);
+        setData(datas, true);
     }
 
     public void setData(List<E> datas, boolean isChanged) {
