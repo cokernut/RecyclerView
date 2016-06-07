@@ -1,4 +1,4 @@
-package top.cokernut.recyclerview.enumeration;
+package top.cokernut.recyclerview.base.enumeration;
 
 public enum LayoutManagerType {
     /**

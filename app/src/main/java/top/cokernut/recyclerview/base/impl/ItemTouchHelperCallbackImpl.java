@@ -1,4 +1,4 @@
-package top.cokernut.recyclerview.impl;
+package top.cokernut.recyclerview.base.impl;
 
 import android.support.v7.widget.RecyclerView;
 

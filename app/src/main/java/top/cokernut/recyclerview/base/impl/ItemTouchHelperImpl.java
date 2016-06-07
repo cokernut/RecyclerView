@@ -1,4 +1,4 @@
-package top.cokernut.recyclerview.impl;
+package top.cokernut.recyclerview.base.impl;
 
 public interface ItemTouchHelperImpl {
 

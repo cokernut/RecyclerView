@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
-import top.cokernut.recyclerview.impl.ItemTouchHelperCallbackImpl;
-import top.cokernut.recyclerview.impl.ItemTouchHelperImpl;
+import top.cokernut.recyclerview.base.impl.ItemTouchHelperCallbackImpl;
+import top.cokernut.recyclerview.base.impl.ItemTouchHelperImpl;
 
 public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.BaseViewHolder> extends RecyclerView.Adapter<VH>
     implements ItemTouchHelperCallbackImpl {

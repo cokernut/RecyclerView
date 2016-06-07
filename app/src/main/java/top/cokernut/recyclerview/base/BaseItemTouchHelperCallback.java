@@ -6,8 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
-import top.cokernut.recyclerview.impl.ItemTouchHelperImpl;
+import top.cokernut.recyclerview.base.impl.ItemTouchHelperImpl;
 
 public abstract class BaseItemTouchHelperCallback extends ItemTouchHelper.Callback {
 

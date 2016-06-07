@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.cokernut.recyclerview.R;
-import top.cokernut.recyclerview.enumeration.LayoutManagerType;
+import top.cokernut.recyclerview.base.enumeration.LayoutManagerType;
 import top.cokernut.recyclerview.fragment.TypeFragment;
 import top.cokernut.recyclerview.widget.MyTabLayout;
 

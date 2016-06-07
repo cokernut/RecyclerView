@@ -4,9 +4,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.View;
 
-import top.cokernut.recyclerview.enumeration.LayoutManagerType;
+import top.cokernut.recyclerview.base.enumeration.LayoutManagerType;
 
 public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
 
