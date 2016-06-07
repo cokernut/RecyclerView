@@ -16,12 +16,12 @@ public class SwipeViewAdapter extends BaseRecyclerAdapter<String, SwipeViewItem>
     }
 
     @Override
-    public SwipeViewItem createHolder(ViewGroup parent, int viewType) {
+    public SwipeViewItem createView(ViewGroup parent, int viewType) {
         return new SwipeViewItem(mInflater.inflate(R.layout.item_swipeview, parent, false));
     }
 
     @Override
-    public void bindHolder(SwipeViewItem holder, int position) {
+    public void bindView(SwipeViewItem holder, int position) {
         holder.txt.setText(getItemModel(position));
     }
 }

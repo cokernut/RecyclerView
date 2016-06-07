@@ -161,17 +161,17 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
 
     @Override
     public final VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return createHolder(parent, viewType);
+        return createView(parent, viewType);
     }
 
-    protected abstract VH createHolder(ViewGroup parent, int viewType);
+    protected abstract VH createView(ViewGroup parent, int viewType);
 
     @Override
     public final void onBindViewHolder(VH holder, int position) {
-        bindHolder(holder, position);
+        bindView(holder, position);
     }
 
-    protected abstract void bindHolder(VH holder, int position);
+    protected abstract void bindView(VH holder, int position);
 
     public static abstract class BaseViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperImpl {
 
