@@ -1,15 +1,12 @@
-package top.cokernut.recyclerview.callback;
+package top.cokernut.recyclerview.base;
 
 import android.support.v7.widget.RecyclerView;
 
-import top.cokernut.recyclerview.adapter.SwipeAndDragAdapter;
-import top.cokernut.recyclerview.base.BaseItemTouchHelperCallback;
+public class SimpleItemTouchHelperCallback extends BaseItemTouchHelperCallback {
 
-public class ItemTouchHelperCallback extends BaseItemTouchHelperCallback {
+    private BaseRecyclerAdapter mAdapter;
 
-    private SwipeAndDragAdapter mAdapter;
-
-    public ItemTouchHelperCallback(SwipeAndDragAdapter adapter) {
+    public SimpleItemTouchHelperCallback(BaseRecyclerAdapter adapter) {
         mAdapter = adapter;
     }
 
@@ -23,11 +20,6 @@ public class ItemTouchHelperCallback extends BaseItemTouchHelperCallback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        mAdapter.removeItem(viewHolder.getAdapterPosition());
-    }
-
-    @Override
-    public boolean isLongPressDragEnabled() {
-        return false;
+        mAdapter.onSwiped(viewHolder, direction);
     }
 }

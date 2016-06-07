@@ -20,6 +20,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
     protected LayoutInflater mInflater;
     protected Context mContext;
     private ItemTouchHelper mItemTouchHelper;
+    private int headerViewCount = 1; //头部数量
 
     protected BaseRecyclerAdapter(Context context, List<E> data) {
         this.mContext = context;
@@ -27,9 +28,19 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
         this.mInflater = LayoutInflater.from(context);
     }
 
+    public boolean isHeaderView(int position) {
+        return headerViewCount != 0 && position < headerViewCount;
+    }
+
     //拖动和滑动事件
     public void setItemTouchHelper(RecyclerView recyclerView) {
-        mItemTouchHelper = new ItemTouchHelper(new BaseItemTouchHelperCallback<>(this));
+        mItemTouchHelper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(this));
+        mItemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    //拖动和滑动事件
+    public void setItemTouchHelper(RecyclerView recyclerView, BaseItemTouchHelperCallback callback) {
+        mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
     }
 

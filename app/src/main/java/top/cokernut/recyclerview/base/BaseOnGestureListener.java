@@ -7,12 +7,10 @@ import android.view.MotionEvent;
  * OnGestureListener主要回调各种单击事件，而OnDoubleTapListener回调各种双击事件
  * sdk 提供了一个外部类SimpleOnGestureListener 这个类实现了上面两个接口的所有方法
  */
-public class BaseOnGestureListener implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+public abstract class BaseOnGestureListener implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     //一次单独的轻击抬起操作,也就是轻击一下屏幕，就是普通点击事件
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
+    public abstract boolean onSingleTapUp(MotionEvent e);
 
     //长按触摸屏，超过一定时长，就会触发这个事件
     public void onLongPress(MotionEvent e) {}

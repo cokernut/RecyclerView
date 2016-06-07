@@ -42,7 +42,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     //添加数据集
     public void setData(ArrayList<String> data) {
-        this.mDatas= data;
+        mDatas= data;
         notifyDataSetChanged();
     }
 

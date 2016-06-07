@@ -9,14 +9,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
 import top.cokernut.recyclerview.impl.ItemTouchHelperImpl;
 
-public class BaseItemTouchHelperCallback<E extends BaseRecyclerAdapter> extends ItemTouchHelper.Callback {
+public abstract class BaseItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     public static final float ALPHA_FULL = 1.0f;
-    protected E mAdapter;
-
-    public BaseItemTouchHelperCallback(E adapter) {
-        mAdapter = adapter;
-    }
 
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
@@ -34,18 +29,10 @@ public class BaseItemTouchHelperCallback<E extends BaseRecyclerAdapter> extends 
     }
 
     @Override
-    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        int fromPosition = viewHolder.getAdapterPosition();//得到拖动ViewHolder的position
-        int toPosition = target.getAdapterPosition();//得到目标ViewHolder的position
-        mAdapter.onMoved(fromPosition, toPosition);
-        return true;
-    }
+    public abstract boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target);
 
     @Override
-    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-        int position = viewHolder.getAdapterPosition();
-        mAdapter.onSwiped(viewHolder, direction);
-    }
+    public abstract void onSwiped(RecyclerView.ViewHolder viewHolder, int direction);
 
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
