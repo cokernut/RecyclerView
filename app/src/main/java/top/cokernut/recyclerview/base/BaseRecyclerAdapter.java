@@ -34,8 +34,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
 
     //拖动和滑动事件
     public void setItemTouchHelper(RecyclerView recyclerView) {
-        mItemTouchHelper = new ItemTouchHelper(new SimpleItemTouchHelperCallback(this));
-        mItemTouchHelper.attachToRecyclerView(recyclerView);
+        setItemTouchHelper(recyclerView, new SimpleItemTouchHelperCallback(this));
     }
 
     //拖动和滑动事件
