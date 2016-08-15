@@ -7,6 +7,9 @@ import android.view.View;
 
 import top.cokernut.recyclerview.base.BaseOnGestureListener;
 
+/**
+ * item点击事件处理
+ */
 public abstract class OnRVItemTouchListener implements RecyclerView.OnItemTouchListener {
     private GestureDetectorCompat mGestureDetector;
     private RecyclerView recyclerView;
@@ -54,6 +57,7 @@ public abstract class OnRVItemTouchListener implements RecyclerView.OnItemTouchL
         }
     }
 
+    //点击事件
     public abstract void onItemClick(RecyclerView.ViewHolder vh, int position);
-    public void onItemLongClick(RecyclerView.ViewHolder vh, int position){};
+    public void onItemLongClick(RecyclerView.ViewHolder vh, int position){}
 }

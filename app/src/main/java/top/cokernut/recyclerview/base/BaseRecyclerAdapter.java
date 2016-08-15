@@ -1,6 +1,7 @@
 package top.cokernut.recyclerview.base;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
@@ -12,15 +13,18 @@ import java.util.List;
 
 import top.cokernut.recyclerview.base.impl.ItemTouchHelperCallbackImpl;
 import top.cokernut.recyclerview.base.impl.ItemTouchHelperImpl;
+import top.cokernut.recyclerview.swipeview.ViewBinderHelper;
 
 public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.BaseViewHolder> extends RecyclerView.Adapter<VH>
-    implements ItemTouchHelperCallbackImpl {
+    implements ItemTouchHelperCallbackImpl, View.OnClickListener {
 
     protected List<E> mData;
     protected LayoutInflater mInflater;
     protected Context mContext;
     private ItemTouchHelper mItemTouchHelper;
-    private int headerViewCount = 1; //头部数量
+    private OnItemClickListener mOnItemClickListener;
+    private int headerViewCount = 0; //头部数量
+    private int footerViewCount = 0; //底部数量
 
     protected BaseRecyclerAdapter(Context context, List<E> data) {
         this.mContext = context;
@@ -30,6 +34,18 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
 
     public boolean isHeaderView(int position) {
         return headerViewCount != 0 && position < headerViewCount;
+    }
+
+    public boolean isFooterView(int position) {
+        return false;
+    }
+
+    public void setHeaderNum(int num) {
+        headerViewCount = num;
+    }
+
+    public void setFooterNum(int num) {
+        footerViewCount = num;
     }
 
     //拖动和滑动事件
@@ -122,11 +138,32 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
         notifyItemMoved(fromPosition, toPosition);
     }
 
+    //其中一种item点击事件的实现
+    @Override
+    public void onClick(View view) {
+        if (mOnItemClickListener != null) {
+            mOnItemClickListener.onItemClick(view, (int)view.getTag());
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
     @Override
     public void onMoved(int fromPosition, int toPosition) {
         moveItem(fromPosition, toPosition);
     }
 
+    /**
+     * Item滑动操作
+     * @param viewHolder item
+     * @param direction 方向
+     */
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         if (viewHolder instanceof BaseViewHolder) {
@@ -145,7 +182,6 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
 
     /**
      * 取得对应位置的Model
-     *
      * @param position 位置
      * @return
      */
@@ -167,12 +203,17 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
 
     @Override
     public final void onBindViewHolder(VH holder, int position) {
+        if (mOnItemClickListener != null) {
+            holder.itemView.setOnClickListener(this);
+            holder.itemView.setTag(position);
+        }
         bindView(holder, position);
+        holder.bind(mData.get(position), position);
     }
 
     protected abstract void bindView(VH holder, int position);
 
-    public static abstract class BaseViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperImpl {
+    public static abstract class BaseViewHolder<E> extends RecyclerView.ViewHolder implements ItemTouchHelperImpl {
 
         public BaseViewHolder(View itemView) {
             super(itemView);
@@ -186,5 +227,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
         public void onItemClear() {}
 
         public void swipe(int direction) {}
+
+        public void bind(E data, int position) {}
     }
 }

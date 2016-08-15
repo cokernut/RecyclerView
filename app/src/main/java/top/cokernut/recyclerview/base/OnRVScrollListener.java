@@ -78,6 +78,8 @@ public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
                 staggeredGridLayoutManager.findLastVisibleItemPositions(lastPositions);
                 lastVisibleItemPosition = findMax(lastPositions);
                 break;
+            default:
+                break;
         }
         int visibleItemCount = layoutManager.getChildCount();
         int totalItemCount = layoutManager.getItemCount();
