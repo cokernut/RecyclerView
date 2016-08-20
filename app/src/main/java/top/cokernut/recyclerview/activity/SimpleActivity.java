@@ -113,7 +113,6 @@ public class SimpleActivity extends AppCompatActivity implements SwipeRefreshLay
         return super.onOptionsItemSelected(item);
     }
 
-
     public void getData(boolean isRefresh) {
         if (isLoading)
             return;
