@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import top.cokernut.library.BaseRecyclerAdapter;
+import top.cokernut.library.swipeview.ViewBinderHelper;
 import top.cokernut.recyclerview.R;
-import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
-import top.cokernut.recyclerview.swipeview.ViewBinderHelper;
 import top.cokernut.recyclerview.viewholder.SwipeViewItem;
 
 public class SwipeViewAdapter extends BaseRecyclerAdapter<String, SwipeViewItem> {

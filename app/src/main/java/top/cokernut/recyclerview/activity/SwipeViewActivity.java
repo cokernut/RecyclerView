@@ -4,16 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import top.cokernut.library.OnRVItemTouchListener;
 import top.cokernut.recyclerview.R;
 import top.cokernut.recyclerview.adapter.SwipeViewAdapter;
-import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
-import top.cokernut.recyclerview.base.OnRVItemTouchListener;
 
 public class SwipeViewActivity extends AppCompatActivity {
 

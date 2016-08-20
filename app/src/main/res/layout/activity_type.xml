@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <top.cokernut.recyclerview.widget.MyTabLayout
+    <top.cokernut.library.widget.MyTabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="60dp"

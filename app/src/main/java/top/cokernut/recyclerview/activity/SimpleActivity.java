@@ -18,11 +18,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import top.cokernut.library.OnRVScrollListener;
 import top.cokernut.recyclerview.R;
 import top.cokernut.recyclerview.adapter.SimpleAdapter;
-import top.cokernut.recyclerview.dialog.CustomDialog;
-import top.cokernut.recyclerview.base.enumeration.LayoutManagerType;
-import top.cokernut.recyclerview.base.OnRVScrollListener;
+import top.cokernut.library.dialog.CustomDialog;
+import top.cokernut.library.enumeration.LayoutManagerType;
 
 public class SimpleActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 

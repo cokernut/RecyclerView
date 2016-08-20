@@ -10,10 +10,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import top.cokernut.library.BaseRecyclerAdapter;
 import top.cokernut.recyclerview.R;
 import top.cokernut.recyclerview.adapter.SwipeAndDragAdapter;
-import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
-import top.cokernut.recyclerview.base.OnRVItemTouchListener;
 
 public class SwipeAndDragActivity extends AppCompatActivity {
 

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import top.cokernut.recyclerview.R;
-import top.cokernut.recyclerview.base.enumeration.LayoutManagerType;
+import top.cokernut.library.enumeration.LayoutManagerType;
 
 public class SimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private LayoutInflater mInflater;

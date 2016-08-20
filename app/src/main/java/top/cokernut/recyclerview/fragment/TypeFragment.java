@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import top.cokernut.recyclerview.R;
 import top.cokernut.recyclerview.adapter.SimpleAdapter;
-import top.cokernut.recyclerview.base.enumeration.LayoutManagerType;
+import top.cokernut.library.enumeration.LayoutManagerType;
 
 public class TypeFragment extends Fragment {
     public static final String TYPE = "type";

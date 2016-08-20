@@ -2,8 +2,8 @@ package top.cokernut.recyclerview.callback;
 
 import android.support.v7.widget.RecyclerView;
 
+import top.cokernut.library.BaseItemTouchHelperCallback;
 import top.cokernut.recyclerview.adapter.SwipeAndDragAdapter;
-import top.cokernut.recyclerview.base.BaseItemTouchHelperCallback;
 
 public class ItemTouchHelperCallback extends BaseItemTouchHelperCallback {
 

@@ -5,8 +5,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.TextView;
 
+import top.cokernut.library.BaseRecyclerAdapter;
 import top.cokernut.recyclerview.R;
-import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
 
 public class SwipeAndDragItem extends BaseRecyclerAdapter.BaseViewHolder {
     public TextView txt;

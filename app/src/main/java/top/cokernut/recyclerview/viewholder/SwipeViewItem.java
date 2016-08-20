@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import top.cokernut.library.BaseRecyclerAdapter;
+import top.cokernut.library.swipeview.SwipeRevealLayout;
 import top.cokernut.recyclerview.R;
-import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
-import top.cokernut.recyclerview.swipeview.SwipeRevealLayout;
 
 public class SwipeViewItem extends BaseRecyclerAdapter.BaseViewHolder<String> {
     public TextView txt;
