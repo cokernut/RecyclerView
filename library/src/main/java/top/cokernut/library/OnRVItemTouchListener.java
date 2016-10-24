@@ -31,6 +31,7 @@ public abstract class OnRVItemTouchListener implements RecyclerView.OnItemTouchL
     @Override
     public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
 
+    //sdk提供了一个外部类SimpleOnGestureListener这个类实现了和BaseOnGestureListener一样的功能
     private class ItemTouchHelperGestureListener extends BaseOnGestureListener {
 
         //点击事件
