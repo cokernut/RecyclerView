@@ -1,4 +1,4 @@
-package top.cokernut.simple.activity;
+package top.cokernut.sample.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
-import top.cokernut.simple.R;
-import top.cokernut.simple.adapter.SwipeAndDragAdapter;
+import top.cokernut.sample.R;
+import top.cokernut.sample.adapter.SwipeAndDragAdapter;
 
 public class SwipeAndDragActivity extends AppCompatActivity {
 

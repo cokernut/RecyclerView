@@ -1,4 +1,4 @@
-package top.cokernut.simple.adapter;
+package top.cokernut.sample.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
-import top.cokernut.simple.R;
-import top.cokernut.simple.viewholder.SwipeAndDragItem;
+import top.cokernut.sample.R;
+import top.cokernut.sample.viewholder.SwipeAndDragItem;
 
 public class SwipeAndDragAdapter extends BaseRecyclerAdapter<String, SwipeAndDragItem> {
 

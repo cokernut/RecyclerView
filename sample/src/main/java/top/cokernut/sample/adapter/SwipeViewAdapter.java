@@ -1,4 +1,4 @@
-package top.cokernut.simple.adapter;
+package top.cokernut.sample.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import java.util.List;
 
 import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
 import top.cokernut.recyclerview.swipeview.ViewBinderHelper;
-import top.cokernut.simple.R;
-import top.cokernut.simple.viewholder.SwipeViewItem;
+import top.cokernut.sample.R;
+import top.cokernut.sample.viewholder.SwipeViewItem;
 
 public class SwipeViewAdapter extends BaseRecyclerAdapter<String, SwipeViewItem> {
     private final ViewBinderHelper binderHelper = new ViewBinderHelper();

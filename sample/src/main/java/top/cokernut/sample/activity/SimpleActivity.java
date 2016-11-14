@@ -1,4 +1,4 @@
-package top.cokernut.simple.activity;
+package top.cokernut.sample.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -19,8 +19,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import top.cokernut.recyclerview.base.OnRVScrollListener;
-import top.cokernut.simple.R;
-import top.cokernut.simple.adapter.SimpleAdapter;
+import top.cokernut.sample.R;
+import top.cokernut.sample.adapter.SimpleAdapter;
 import top.cokernut.recyclerview.dialog.CustomDialog;
 import top.cokernut.recyclerview.enumeration.LayoutManagerType;
 

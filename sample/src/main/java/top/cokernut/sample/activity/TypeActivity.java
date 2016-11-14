@@ -1,4 +1,4 @@
-package top.cokernut.simple.activity;
+package top.cokernut.sample.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,9 +14,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import top.cokernut.simple.R;
+import top.cokernut.sample.R;
 import top.cokernut.recyclerview.enumeration.LayoutManagerType;
-import top.cokernut.simple.fragment.TypeFragment;
+import top.cokernut.sample.fragment.TypeFragment;
 import top.cokernut.recyclerview.widget.MyTabLayout;
 
 public class TypeActivity extends AppCompatActivity {

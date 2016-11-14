@@ -1,4 +1,4 @@
-package top.cokernut.simple.activity;
+package top.cokernut.sample.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
 
-import top.cokernut.simple.R;
+import top.cokernut.sample.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

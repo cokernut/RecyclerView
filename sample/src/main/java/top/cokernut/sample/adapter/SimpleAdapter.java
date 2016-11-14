@@ -1,4 +1,4 @@
-package top.cokernut.simple.adapter;
+package top.cokernut.sample.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import top.cokernut.simple.R;
+import top.cokernut.sample.R;
 import top.cokernut.recyclerview.enumeration.LayoutManagerType;
 
 public class SimpleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {

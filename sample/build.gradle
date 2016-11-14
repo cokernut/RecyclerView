@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId "top.cokernut.simple"
+        applicationId "top.cokernut.recyclerview.sample"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1

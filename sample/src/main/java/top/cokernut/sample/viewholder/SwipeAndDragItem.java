@@ -1,4 +1,4 @@
-package top.cokernut.simple.viewholder;
+package top.cokernut.sample.viewholder;
 
 import android.graphics.Color;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
-import top.cokernut.simple.R;
+import top.cokernut.sample.R;
 
 public class SwipeAndDragItem extends BaseRecyclerAdapter.BaseViewHolder {
     public TextView txt;

@@ -1,4 +1,4 @@
-package top.cokernut.simple.fragment;
+package top.cokernut.sample.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import top.cokernut.simple.R;
-import top.cokernut.simple.adapter.SimpleAdapter;
+import top.cokernut.sample.R;
+import top.cokernut.sample.adapter.SimpleAdapter;
 import top.cokernut.recyclerview.enumeration.LayoutManagerType;
 
 public class TypeFragment extends Fragment {

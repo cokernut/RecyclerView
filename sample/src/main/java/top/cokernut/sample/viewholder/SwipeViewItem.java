@@ -1,4 +1,4 @@
-package top.cokernut.simple.viewholder;
+package top.cokernut.sample.viewholder;
 
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import top.cokernut.recyclerview.base.BaseRecyclerAdapter;
 import top.cokernut.recyclerview.swipeview.SwipeRevealLayout;
-import top.cokernut.simple.R;
+import top.cokernut.sample.R;
 
 public class SwipeViewItem extends BaseRecyclerAdapter.BaseViewHolder<String> {
     public TextView txt;

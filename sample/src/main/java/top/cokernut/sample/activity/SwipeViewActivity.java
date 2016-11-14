@@ -1,4 +1,4 @@
-package top.cokernut.simple.activity;
+package top.cokernut.sample.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import top.cokernut.recyclerview.base.OnRVItemTouchListener;
-import top.cokernut.simple.R;
-import top.cokernut.simple.adapter.SwipeViewAdapter;
+import top.cokernut.sample.R;
+import top.cokernut.sample.adapter.SwipeViewAdapter;
 
 public class SwipeViewActivity extends AppCompatActivity {
 
