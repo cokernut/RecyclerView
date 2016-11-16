@@ -24,16 +24,14 @@ public class SwipeViewAdapter extends BaseRecyclerAdapter<String, SwipeViewItem>
     }
 
     /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onSaveInstanceState(Bundle)}
+     * 保存状态
      */
     public void saveStates(Bundle outState) {
         binderHelper.saveStates(outState);
     }
 
     /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onRestoreInstanceState(Bundle)}
+     * 还原状态
      */
     public void restoreStates(Bundle inState) {
         binderHelper.restoreStates(inState);
@@ -41,7 +39,7 @@ public class SwipeViewAdapter extends BaseRecyclerAdapter<String, SwipeViewItem>
 
     @Override
     public void bindView(SwipeViewItem holder, int position) {
-        binderHelper.bind(holder.swipeLayout, mData.get(position));
+        binderHelper.bind(holder.swipeLayout, String.valueOf(position));
         holder.txt.setText(getItemModel(position));
         holder.help.setTag(getItemModel(position));
     }

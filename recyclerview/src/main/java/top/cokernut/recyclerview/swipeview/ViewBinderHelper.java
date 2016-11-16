@@ -1,27 +1,3 @@
-/**
- The MIT License (MIT)
-
- Copyright (c) 2016 Chau Thai
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
-
 package top.cokernut.recyclerview.swipeview;
 
 import android.os.Bundle;
@@ -32,16 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * ViewBinderHelper provides a quick and easy solution to restore the open/close state
- * of the items in RecyclerView, ListView, GridView or any view that requires its child view
- * to bind the view to a data object.
- *
- * <p>When you bind you data object to a view, use {@link #bind(SwipeRevealLayout, String)} to
- * save and restore the open/close state of the view.</p>
- *
- * <p>Optionally, if you also want to save and restore the open/close state when the device's
- * orientation is changed, call {@link #saveStates(Bundle)} in {@link android.app.Activity#onSaveInstanceState(Bundle)}
- * and {@link #restoreStates(Bundle)} in {@link android.app.Activity#onRestoreInstanceState(Bundle)}</p>
+ * ViewBinderHelper提供了一个快速和简单的方案来恢复打开/关闭状态，可以用于RecyclerView, ListView, GridView
  */
 public class ViewBinderHelper {
     private static final String BUNDLE_MAP_KEY = "ViewBinderHelper_Bundle_Map_Key";
@@ -53,11 +20,10 @@ public class ViewBinderHelper {
     private final Object stateChangeLock = new Object();
 
     /**
-     * Help to save and restore open/close state of the swipeLayout. Call this method
-     * when you bind your view holder with the data object.
+     * 有助于保存和恢复swipeLayout的打开/关闭状态
      *
-     * @param swipeLayout swipeLayout of the current view.
-     * @param id a string that uniquely defines the data object of the current view.
+     * @param swipeLayout swipeLayout view.
+     * @param id 这是唯一性的，能够标记当前数据对象
      */
     public void bind(final SwipeRevealLayout swipeLayout, final String id) {
         mapLayouts.values().remove(swipeLayout);
@@ -75,13 +41,13 @@ public class ViewBinderHelper {
             }
         });
 
-        // first time binding.
+        // 第一次绑定。
         if (!mapStates.containsKey(id)) {
             mapStates.put(id, SwipeRevealLayout.STATE_CLOSE);
             swipeLayout.close(false);
         }
 
-        // not the first time, then close or open depends on the current state.
+        // 不是第一次,然后关闭或打开取决于当前状态。
         else {
             int state = mapStates.get(id);
 
@@ -95,8 +61,7 @@ public class ViewBinderHelper {
     }
 
     /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onSaveInstanceState(Bundle)}
+     * 如果状态发生改变，用于保存打开/关闭状态
      */
     public void saveStates(Bundle outState) {
         if (outState == null)
@@ -112,8 +77,7 @@ public class ViewBinderHelper {
 
 
     /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in {@link android.app.Activity#onRestoreInstanceState(Bundle)}
+     * 恢复打开/关闭状态
      */
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     public void restoreStates(Bundle inState) {
@@ -137,15 +101,15 @@ public class ViewBinderHelper {
     }
 
     /**
-     * @param openOnlyOne If set to true, then only one row can be opened at a time.
+     * @param openOnlyOne 如果设置为true,那么一次只能打开一行。
      */
     public void setOpenOnlyOne(boolean openOnlyOne) {
         this.openOnlyOne = openOnlyOne;
     }
 
     /**
-     * Open a specific layout.
-     * @param id unique id which identifies the data object which is bind to the layout.
+     * 打开一个指定的布局。
+     * @param id id标识的数据对象
      */
     public void openLayout(final String id) {
         synchronized (stateChangeLock) {
@@ -162,8 +126,8 @@ public class ViewBinderHelper {
     }
 
     /**
-     * Close a specific layout.
-     * @param id unique id which identifies the data object which is bind to the layout.
+     * 关闭一个指定的布局。
+     * @param id id标识的数据对象
      */
     public void closeLayout(final String id) {
         synchronized (stateChangeLock) {
@@ -177,13 +141,13 @@ public class ViewBinderHelper {
     }
 
     /**
-     * Close others swipe layout.
-     * @param id layout which bind with this data object id will be excluded.
-     * @param swipeLayout will be excluded.
+     * 关闭其他布局
+     * @param id 排除的id标识的数据对象
+     * @param swipeLayout 排除的swipeLayout.
      */
     private void closeOthers(String id, SwipeRevealLayout swipeLayout) {
         synchronized (stateChangeLock) {
-            // close other rows if openOnlyOne is true.
+            // 关闭打开的其他行
             if (getOpenCount() > 1) {
                 for (Map.Entry<String, Integer> entry : mapStates.entrySet()) {
                     if (!entry.getKey().equals(id)) {

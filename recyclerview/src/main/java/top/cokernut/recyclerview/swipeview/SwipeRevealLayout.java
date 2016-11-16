@@ -1,27 +1,3 @@
-/**
- The MIT License (MIT)
-
- Copyright (c) 2016 Chau Thai
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
-
 package top.cokernut.recyclerview.swipeview;
 
 import android.annotation.SuppressLint;
@@ -44,14 +20,14 @@ import top.cokernut.recyclerview.R;
 
 @SuppressLint("RtlHardcoded")
 public class SwipeRevealLayout extends ViewGroup {
-    // These states are used only for ViewBindHelper
+    // 用于ViewBindHelper的状态
     protected static final int STATE_CLOSE     = 0;
     protected static final int STATE_CLOSING   = 1;
     protected static final int STATE_OPEN      = 2;
     protected static final int STATE_OPENING   = 3;
     protected static final int STATE_DRAGGING  = 4;
 
-    private static final int DEFAULT_MIN_FLING_VELOCITY = 300; // dp per second
+    private static final int DEFAULT_MIN_FLING_VELOCITY = 300; // 每秒速度
 
     public static final int DRAG_EDGE_LEFT =   0x1;
     public static final int DRAG_EDGE_RIGHT =  0x1 << 1;
@@ -59,42 +35,42 @@ public class SwipeRevealLayout extends ViewGroup {
     public static final int DRAG_EDGE_BOTTOM = 0x1 << 3;
 
     /**
-     * The secondary view will be under the main view.
+     * secondary view在main view下面.
      */
     public static final int MODE_NORMAL = 0;
 
     /**
-     * The secondary view will stick the edge of the main view.
+     * secondary view 在 main view边缘.
      */
     public static final int MODE_SAME_LEVEL = 1;
 
     /**
-     * Main view is the view which is shown when the layout is closed.
+     * 主View
      */
     private View mMainView;
 
     /**
-     * Secondary view is the view which is shown when the layout is opened.
+     * 辅助View
      */
     private View mSecondaryView;
 
     /**
-     * The rectangle position of the main view when the layout is closed.
+     * 在main view关闭时候的矩形位置.
      */
     private Rect mRectMainClose = new Rect();
 
     /**
-     * The rectangle position of the main view when the layout is opened.
+     * 在main view打开时候的矩形位置.
      */
     private Rect mRectMainOpen  = new Rect();
 
     /**
-     * The rectangle position of the secondary view when the layout is closed.
+     * 在secondary view关闭时候的矩形位置.
      */
     private Rect mRectSecClose  = new Rect();
 
     /**
-     * The rectangle position of the secondary view when the layout is opened.
+     * 在secondary view打开时候的矩形位置.
      */
     private Rect mRectSecOpen   = new Rect();
 
@@ -115,7 +91,7 @@ public class SwipeRevealLayout extends ViewGroup {
     private ViewDragHelper mDragHelper;
     private GestureDetectorCompat mGestureDetector;
 
-    private DragStateChangeListener mDragStateChangeListener; // only used for ViewBindHelper
+    private DragStateChangeListener mDragStateChangeListener; // 仅用于 ViewBindHelper
     private SwipeListener mSwipeListener;
 
     interface DragStateChangeListener {
@@ -123,29 +99,28 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     /**
-     * Listener for monitoring events about swipe layout.
+     * swipe layout事件的监听器.
      */
     public interface SwipeListener {
         /**
-         * Called when the main view becomes completely closed.
+         * main view关闭时触发.
          */
         void onClosed(SwipeRevealLayout view);
 
         /**
-         * Called when the main view becomes completely opened.
+         * main view打开时触发.
          */
         void onOpened(SwipeRevealLayout view);
 
         /**
-         * Called when the main view's position changes.
-         * @param slideOffset The new offset of the main view within its range, from 0-1
+         * main view 位置变化时触发.
+         * @param slideOffset  main view 的偏移范围, 值为 0-1
          */
         void onSlide(SwipeRevealLayout view, float slideOffset);
     }
 
     /**
-     * No-op stub for {@link SwipeListener}. If you only want ot implement a subset
-     * of the listener methods, you can extend this instead of implement the full interface.
+     * SwipeListener基础实现，你可以继承SimpleSwipeListener实现重写方法
      */
     public static class SimpleSwipeListener implements SwipeListener {
         @Override
@@ -195,7 +170,7 @@ public class SwipeRevealLayout extends ViewGroup {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        // get views
+        // 取得View
         if (getChildCount() >= 2) {
             mSecondaryView = getChildAt(0);
             mMainView = getChildAt(1);
@@ -206,7 +181,7 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     /**
-     * {@inheritDoc}
+     * 确定位置
      */
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -227,7 +202,7 @@ public class SwipeRevealLayout extends ViewGroup {
             int measuredChildHeight = child.getMeasuredHeight();
             int measuredChildWidth = child.getMeasuredWidth();
 
-            // need to take account if child size is match_parent
+            // 需要考虑孩子是否是match_parent的大小
             final LayoutParams childParams = child.getLayoutParams();
             boolean matchParentHeight = false;
             boolean matchParentWidth = false;
@@ -282,7 +257,7 @@ public class SwipeRevealLayout extends ViewGroup {
             child.layout(left, top, right, bottom);
         }
 
-        // taking account offset when mode is SAME_LEVEL
+        // 考虑是SAME_LEVEL模式时
         if (mMode == MODE_SAME_LEVEL) {
             switch (mDragEdge) {
                 case DRAG_EDGE_LEFT:
@@ -315,7 +290,7 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     /**
-     * {@inheritDoc}
+     * 测量大小
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -353,11 +328,11 @@ public class SwipeRevealLayout extends ViewGroup {
             desiredHeight = Math.max(child.getMeasuredHeight(), desiredHeight);
         }
 
-        // taking accounts of padding
+        //  padding
         desiredWidth += getPaddingLeft() + getPaddingRight();
         desiredHeight += getPaddingTop() + getPaddingBottom();
 
-        // adjust desired width
+        // 调整所需的宽度
         if (widthMode == MeasureSpec.EXACTLY) {
             desiredWidth = measuredWidth;
         } else {
@@ -370,7 +345,7 @@ public class SwipeRevealLayout extends ViewGroup {
             }
         }
 
-        // adjust desired height
+        // 调整所需的高度
         if (heightMode == MeasureSpec.EXACTLY) {
             desiredHeight = measuredHeight;
         } else {
@@ -394,9 +369,8 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     /**
-     * Open the panel to show the secondary view
-     * @param animation true to animate the open motion. {@link SwipeListener} won't be
-     *                  called if is animation is false.
+     * 打开 secondary view
+     * @param animation 要开启动画是设置为true，否则为false.
      */
     public void open(boolean animation) {
         mIsOpenBeforeInit = true;
@@ -432,9 +406,8 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     /**
-     * Close the panel to hide the secondary view
-     * @param animation true to animate the close motion. {@link SwipeListener} won't be
-     *                  called if is animation is false.
+     *  打开 secondary view
+     * @param animation 要开启动画是设置为true，否则为false.
      */
     public void close(boolean animation) {
         mIsOpenBeforeInit = false;
@@ -471,44 +444,34 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     /**
-     * Set the minimum fling velocity to cause the layout to open/close.
-     * @param velocity dp per second
+     * 设置最低的布局打开/关闭速度。
+     * @param velocity dp每秒
      */
     public void setMinFlingVelocity(int velocity) {
         mMinFlingVelocity = velocity;
     }
 
     /**
-     * Get the minimum fling velocity to cause the layout to open/close.
-     * @return dp per second
+     * 得到最低的布局打开/关闭速度。
+     * @return dp每秒
      */
     public int getMinFlingVelocity() {
         return mMinFlingVelocity;
     }
 
     /**
-     * Set the edge where the layout can be dragged from.
-     * @param dragEdge Can be one of these
-     *                 <ul>
-     *                      <li>{@link #DRAG_EDGE_LEFT}</li>
-     *                      <li>{@link #DRAG_EDGE_TOP}</li>
-     *                      <li>{@link #DRAG_EDGE_RIGHT}</li>
-     *                      <li>{@link #DRAG_EDGE_BOTTOM}</li>
-     *                 </ul>
+     * 设置边缘布局的方向。
+     * @param dragEdge 可以是其中一个：{@link #DRAG_EDGE_LEFT},{@link #DRAG_EDGE_TOP},
+     * {@link #DRAG_EDGE_RIGHT},{@link #DRAG_EDGE_BOTTOM}
      */
     public void setDragEdge(int dragEdge) {
         mDragEdge = dragEdge;
     }
 
     /**
-     * Get the edge where the layout can be dragged from.
-     * @return Can be one of these
-     *                 <ul>
-     *                      <li>{@link #DRAG_EDGE_LEFT}</li>
-     *                      <li>{@link #DRAG_EDGE_TOP}</li>
-     *                      <li>{@link #DRAG_EDGE_RIGHT}</li>
-     *                      <li>{@link #DRAG_EDGE_BOTTOM}</li>
-     *                 </ul>
+     * 取得边缘布局的方向。
+     * @return 可以是其中一个：{@link #DRAG_EDGE_LEFT},{@link #DRAG_EDGE_TOP},
+     * {@link #DRAG_EDGE_RIGHT},{@link #DRAG_EDGE_BOTTOM}
      */
     public int getDragEdge() {
         return mDragEdge;
@@ -519,39 +482,39 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     /**
-     * @param lock if set to true, the user cannot drag/swipe the layout.
+     * @param lock 设置为true, 则用户不能 拖动/滑动 布局.
      */
     public void setLockDrag(boolean lock) {
         mLockDrag = lock;
     }
 
     /**
-     * @return true if the drag/swipe motion is currently locked.
+     * @return 如果 拖动/滑动 布局被锁定则返回true
      */
     public boolean isDragLocked() {
         return mLockDrag;
     }
 
     /**
-     * @return true if layout is fully opened, false otherwise.
+     * @return 布局被打开返回true 否则返回 false
      */
     public boolean isOpened() {
         return (mState == STATE_OPEN);
     }
 
     /**
-     * @return true if layout is fully closed, false otherwise.
+     * @return 布局被全部关闭返回true 否则返回false
      */
     public boolean isClosed() {
         return (mState == STATE_CLOSE);
     }
 
-    /** Only used for {@link ViewBinderHelper} */
+    /** 仅用于 ViewBinderHelper*/
     void setDragStateChangeListener(DragStateChangeListener listener) {
         mDragStateChangeListener = listener;
     }
 
-    /** Abort current motion in progress. Only used for {@link ViewBinderHelper} */
+    /** 终止当前活动. 仅用于 ViewBinderHelper {@link ViewBinderHelper} */
     protected void abort() {
         mAborted = true;
         mDragHelper.abort();
@@ -621,7 +584,7 @@ public class SwipeRevealLayout extends ViewGroup {
     }
 
     private void initRects() {
-        // close position of main view
+        // 设置关闭 Main View 的位置
         mRectMainClose.set(
                 mMainView.getLeft(),
                 mMainView.getTop(),
@@ -629,7 +592,7 @@ public class SwipeRevealLayout extends ViewGroup {
                 mMainView.getBottom()
         );
 
-        // close position of secondary view
+        // 设置关闭 secondary view 的位置
         mRectSecClose.set(
                 mSecondaryView.getLeft(),
                 mSecondaryView.getTop(),
@@ -637,7 +600,7 @@ public class SwipeRevealLayout extends ViewGroup {
                 mSecondaryView.getBottom()
         );
 
-        // open position of the main view
+        // 设置打开 Main View 的位置
         mRectMainOpen.set(
                 getMainOpenLeft(),
                 getMainOpenTop(),
@@ -645,7 +608,7 @@ public class SwipeRevealLayout extends ViewGroup {
                 getMainOpenTop() + mMainView.getHeight()
         );
 
-        // open position of the secondary view
+        // 设置打开 secondary view 的位置
         mRectSecOpen.set(
                 getSecOpenLeft(),
                 getSecOpenTop(),
@@ -920,7 +883,7 @@ public class SwipeRevealLayout extends ViewGroup {
 
                 case ViewDragHelper.STATE_IDLE:
 
-                    // drag edge is left or right
+                    // 在边缘向左或者向右拖动
                     if (mDragEdge == DRAG_EDGE_LEFT || mDragEdge == DRAG_EDGE_RIGHT) {
                         if (mMainView.getLeft() == mRectMainClose.left) {
                             mState = STATE_CLOSE;
@@ -929,7 +892,7 @@ public class SwipeRevealLayout extends ViewGroup {
                         }
                     }
 
-                    // drag edge is top or bottom
+                    // 在边缘向上或者向下拖动
                     else {
                         if (mMainView.getTop() == mRectMainClose.top) {
                             mState = STATE_CLOSE;
