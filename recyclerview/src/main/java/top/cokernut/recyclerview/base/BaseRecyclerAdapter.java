@@ -36,7 +36,11 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
     }
 
     public boolean isFooterView(int position) {
-        return false;
+        return footerViewCount != 0 && position >= (footerViewCount + getContentItemCount());
+    }
+
+    public int getContentItemCount() {
+        return mData.size();
     }
 
     public void setHeaderNum(int num) {
@@ -202,7 +206,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData.size() + headerViewCount + footerViewCount;
     }
 
     @Override
