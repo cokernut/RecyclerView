@@ -3,6 +3,7 @@ package top.cokernut.recyclerview.base;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,23 +94,22 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
     }
 
     //添加数据
-    public void addItem(E model, int position) {
+    public void addItem(int position, E model) {
         mData.add(position, model);
         notifyItemInserted(position);
     }
 
     //添加数据集
-    public void addItems(List<E> datas, int position) {
+    public void addItems(int position, List<E> datas) {
         mData.addAll(position, datas);
         notifyItemRangeInserted(position, datas.size());
+        notifyItemRangeChanged(position, mData.size() - position);
     }
 
     //删除数据
     public void removeItem(E model) {
         int position = mData.indexOf(model);
-        mData.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mData.size() - position);
+        removeItem(position);
     }
 
     //删除数据
@@ -120,26 +120,18 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
     }
 
     //改变数据
-    public void changeItem(E model) {
-        int position = mData.indexOf(model);
+    public void changeItem(int position, E model) {
         mData.set(position, model);
         notifyItemChanged(position);
     }
 
-    //改变数据
-    public void changeItem(E model, int position) {
-        mData.set(position, model);
-        notifyItemChanged(position);
-    }
-
-    //移动数据
+    /**
+     * 相邻的两个item不停的触发
+     * @param fromPosition
+     * @param toPosition
+     */
     public void moveItem(int fromPosition, int toPosition) {
-        mData.add(toPosition, mData.get(fromPosition));
-        if (fromPosition > toPosition) {
-            mData.remove(fromPosition + 1);
-        } else {
-            mData.remove(fromPosition);
-        }
+        Collections.swap(mData, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -164,7 +156,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
     }
 
     /**
-     * item移动
+     * item移动，相邻的两个item不停的触发
      * @param fromPosition 初始位置
      * @param toPosition 目的位置
      */

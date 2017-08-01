@@ -12,6 +12,13 @@ public abstract class BaseItemTouchHelperCallback extends ItemTouchHelper.Callba
 
     public static final float ALPHA_FULL = 1.0f;
 
+    /**
+     * 用于设置是否处理拖拽事件和滑动事件，以及拖拽和滑动操作的方向，比如如果是列表类型的RecyclerView，
+     * 拖拽只有UP、DOWN两个方向，而如果是网格类型的则有UP、DOWN、LEFT、RIGHT四个方向：
+     * @param recyclerView
+     * @param viewHolder
+     * @return
+     */
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager ||
@@ -27,12 +34,34 @@ public abstract class BaseItemTouchHelperCallback extends ItemTouchHelper.Callba
         }
     }
 
+    /**
+     * item移动
+     * @param recyclerView
+     * @param viewHolder
+     * @param target
+     * @return
+     */
     @Override
     public abstract boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target);
 
+    /**
+     * item滑动
+     * @param viewHolder
+     * @param direction
+     */
     @Override
     public abstract void onSwiped(RecyclerView.ViewHolder viewHolder, int direction);
 
+    /**
+     * 在RecyclerView调用onDraw方法的时候，调用此方法
+     * @param c
+     * @param recyclerView
+     * @param viewHolder
+     * @param dX
+     * @param dY
+     * @param actionState
+     * @param isCurrentlyActive
+     */
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
                             float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -45,7 +74,7 @@ public abstract class BaseItemTouchHelperCallback extends ItemTouchHelper.Callba
         }
     }
 
-    //当长按选中item的时候（拖拽开始的时候）调用
+    //当长按选中item的时候（拖拽开始的时候）调用，可以定义自己的拖动背景
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
@@ -57,7 +86,7 @@ public abstract class BaseItemTouchHelperCallback extends ItemTouchHelper.Callba
         super.onSelectedChanged(viewHolder, actionState);
     }
 
-    //当手指松开的时候（拖拽完成的时候）调用
+    //当手指松开的时候（拖拽完成的时候）调用，可以用来清除背景状态。
     @Override
     public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         super.clearView(recyclerView, viewHolder);
