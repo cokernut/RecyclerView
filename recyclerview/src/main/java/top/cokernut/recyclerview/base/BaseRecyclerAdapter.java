@@ -115,6 +115,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
     public void removeItem(int position) {
         mData.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mData.size() - position);
     }
 
     //改变数据
@@ -132,7 +133,12 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
 
     //移动数据
     public void moveItem(int fromPosition, int toPosition) {
-        Collections.swap(mData, fromPosition, toPosition);
+        mData.add(toPosition, mData.get(fromPosition));
+        if (fromPosition > toPosition) {
+            mData.remove(fromPosition + 1);
+        } else {
+            mData.remove(fromPosition);
+        }
         notifyItemMoved(fromPosition, toPosition);
     }
 
@@ -148,10 +154,19 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
         void onItemClick(View view, int position);
     }
 
+    /**
+     * 设置item监听
+     * @param mOnItemClickListener
+     */
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
+    /**
+     * item移动
+     * @param fromPosition 初始位置
+     * @param toPosition 目的位置
+     */
     @Override
     public void onMoved(int fromPosition, int toPosition) {
         moveItem(fromPosition, toPosition);
@@ -174,6 +189,11 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
         return getItemType(position);
     }
 
+    /**
+     * item Type
+     * @param position
+     * @return
+     */
     protected int getItemType(int position) {
         return 0;
     }

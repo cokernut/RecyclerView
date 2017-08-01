@@ -37,9 +37,7 @@ public class GalleryRecyclerView extends RecyclerView {
                 if (mItemScrollChangeListener != null) {
                     if (newView != null && newView != mCurrentView) {
                         mCurrentView = newView;
-                        mItemScrollChangeListener.onChange(mCurrentView,
-                                getChildPosition(mCurrentView));
-
+                        mItemScrollChangeListener.onChange(mCurrentView, getChildLayoutPosition(mCurrentView));
                     }
                 }
 
@@ -52,8 +50,7 @@ public class GalleryRecyclerView extends RecyclerView {
         super.onLayout(changed, l, t, r, b);
         mCurrentView = getChildAt(0);
         if (mItemScrollChangeListener != null) {
-            mItemScrollChangeListener.onChange(mCurrentView,
-                    getChildPosition(mCurrentView));
+            mItemScrollChangeListener.onChange(mCurrentView, getChildLayoutPosition(mCurrentView));
         }
     }
 

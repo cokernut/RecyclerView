@@ -6,6 +6,9 @@ import android.util.AttributeSet;
 
 import java.lang.reflect.Field;
 
+/**
+ * 自定义TabLayout，当item总长度不足以填满layout的宽度时，item会平均拉伸到填满
+ */
 public class MyTabLayout extends TabLayout {
     public MyTabLayout(Context context) {
         super(context);

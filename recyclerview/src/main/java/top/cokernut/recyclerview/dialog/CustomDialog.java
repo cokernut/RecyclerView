@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import top.cokernut.recyclerview.R;
 
-
+/**
+ * 自定义Dialog
+ */
 public class CustomDialog extends Dialog {
 
     public CustomDialog(Context context) {
