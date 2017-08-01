@@ -85,11 +85,10 @@ public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
         int totalItemCount = layoutManager.getItemCount();
         if (firstVisibleItemPosition == 0) {
             onTop();
+        } else if (visibleItemCount > 0 && lastVisibleItemPosition + 1 >= totalItemCount) {
+            onBottom();
         } else {
             onCenter();
-        }
-        if (visibleItemCount > 0 && lastVisibleItemPosition + 1 >= totalItemCount) {
-            onBottom();
         }
 
     }
