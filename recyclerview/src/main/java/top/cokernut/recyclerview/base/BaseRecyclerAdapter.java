@@ -109,6 +109,7 @@ public abstract class BaseRecyclerAdapter<E, VH extends BaseRecyclerAdapter.Base
         int position = mData.indexOf(model);
         mData.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mData.size() - position);
     }
 
     //删除数据
