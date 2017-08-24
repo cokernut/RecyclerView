@@ -2,6 +2,7 @@ package top.cokernut.recyclerview.base;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
@@ -45,6 +46,8 @@ public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
 
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
 
+
+        //第一种方式
         if (layoutManager instanceof LinearLayoutManager) {
             layoutManagerType = LayoutManagerType.LINEAR;
         } else if (layoutManager instanceof GridLayoutManager) {
@@ -91,7 +94,108 @@ public abstract class OnRVScrollListener extends RecyclerView.OnScrollListener {
             onCenter();
         }
 
+/*
+        //第二种方法
+
+        if (layoutManager instanceof LinearLayoutManager) {
+            if (OrientationHelper.HORIZONTAL == ((LinearLayoutManager)layoutManager).getOrientation()) {
+                horizontalScroll(recyclerView);
+            } else {
+                verticalScroll(recyclerView);
+            }
+        } else if (layoutManager instanceof GridLayoutManager) {
+            if (OrientationHelper.VERTICAL == ((GridLayoutManager)layoutManager).getOrientation()) {
+                verticalScroll(recyclerView);
+            } else {
+                horizontalScroll(recyclerView);
+            }
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            if (OrientationHelper.VERTICAL == ((StaggeredGridLayoutManager)layoutManager).getOrientation()) {
+                verticalScroll(recyclerView);
+            } else {
+                horizontalScroll(recyclerView);
+            }
+        } else {
+            throw new RuntimeException(
+                    "Unsupported LayoutManager used. Valid ones are LinearLayoutManager, GridLayoutManager and StaggeredGridLayoutManager");
+        }
+
+
+        //第三种方法
+        if (layoutManager instanceof LinearLayoutManager) {
+            if (OrientationHelper.VERTICAL == ((LinearLayoutManager)layoutManager).getOrientation()) {
+                canVerticalScroll(recyclerView);
+            } else {
+                canHorizontalScroll(recyclerView);
+            }
+        } else if (layoutManager instanceof GridLayoutManager) {
+            if (OrientationHelper.VERTICAL == ((GridLayoutManager)layoutManager).getOrientation()) {
+                canVerticalScroll(recyclerView);
+            } else {
+                canHorizontalScroll(recyclerView);
+            }
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            if (OrientationHelper.VERTICAL == ((StaggeredGridLayoutManager)layoutManager).getOrientation()) {
+                canVerticalScroll(recyclerView);
+            } else {
+                canHorizontalScroll(recyclerView);
+            }
+        } else {
+            throw new RuntimeException(
+                    "Unsupported LayoutManager used. Valid ones are LinearLayoutManager, GridLayoutManager and StaggeredGridLayoutManager");
+        }*/
     }
+
+    /**
+     * Extent：显示区域的长度
+     * Offset：已经滑出屏幕外的长度
+     * Range：总长度，包括：滑出屏幕外的长度+显示区域的长度+还未显示屏幕外的长度
+     * @param recyclerView
+     */
+    private void horizontalScroll(RecyclerView recyclerView) {
+        if (recyclerView.computeHorizontalScrollExtent() + recyclerView.computeHorizontalScrollOffset() >= recyclerView.computeHorizontalScrollRange()) {
+            onBottom();
+        } else if (recyclerView.computeHorizontalScrollOffset() <= 0) {
+            onTop();
+        } else {
+            onCenter();
+        }
+    }
+
+    private void verticalScroll(RecyclerView recyclerView) {
+        if (recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset() >= recyclerView.computeVerticalScrollRange()) {
+            onBottom();
+        } else if (recyclerView.computeVerticalScrollOffset() <= 0) {
+            onTop();
+        } else {
+            onCenter();
+        }
+    }
+
+    private void canHorizontalScroll(RecyclerView recyclerView) {
+        if (!recyclerView.canScrollHorizontally(1)) {
+            onBottom();
+        } else if (!recyclerView.canScrollHorizontally(-1)) {
+            onTop();
+        } else {
+            onCenter();
+        }
+    }
+    /**
+     * RecyclerView.canScrollVertically(1)的值表示是否能向上滚动，false表示已经滚动到底部
+     * RecyclerView.canScrollVertically(-1)的值表示是否能向下滚动，false表示已经滚动到顶部
+     * @param recyclerView
+     */
+    private void canVerticalScroll(RecyclerView recyclerView) {
+        if (!recyclerView.canScrollVertically(1)) {
+            onBottom();
+        } else if (!recyclerView.canScrollVertically(-1)) {
+            onTop();
+        } else {
+            onCenter();
+        }
+    }
+
 
     public abstract void onBottom();
 
